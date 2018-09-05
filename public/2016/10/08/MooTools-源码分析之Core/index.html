@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="title: MooTools 源码分析之Core (未完待续)date: 2016-08-02 17:04:55categories:    MooToolstags: - 源码分析 —8881234567(function()&amp;#123;	//代码被包在一个匿名函数的内部，所以这里的this明确指向全局对象。	//版本信息this.MooTools = &amp;#123;	version: &apos;1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="夏夜牧羊">
+<meta property="og:url" content="http://yoursite.com/2016/10/08/MooTools-源码分析之Core/index.html">
+<meta property="og:site_name" content="夏夜牧羊">
+<meta property="og:description" content="title: MooTools 源码分析之Core (未完待续)date: 2016-08-02 17:04:55categories:    MooToolstags: - 源码分析 —8881234567(function()&amp;#123;	//代码被包在一个匿名函数的内部，所以这里的this明确指向全局对象。	//版本信息this.MooTools = &amp;#123;	version: &apos;1.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-10-07T21:25:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="夏夜牧羊">
+<meta name="twitter:description" content="title: MooTools 源码分析之Core (未完待续)date: 2016-08-02 17:04:55categories:    MooToolstags: - 源码分析 —8881234567(function()&amp;#123;	//代码被包在一个匿名函数的内部，所以这里的this明确指向全局对象。	//版本信息this.MooTools = &amp;#123;	version: &apos;1.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/08/MooTools-源码分析之Core/"/>
+
+
+
+
+
+  <title> | 夏夜牧羊</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">夏夜牧羊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">夏夜牧羊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/08/MooTools-源码分析之Core/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="夏夜牧羊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-08T05:25:40+08:00">
+                2016-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>title: MooTools 源码分析之Core (未完待续)<br>date: 2016-08-02 17:04:55<br>categories:<br>    MooTools<br>tags:</p>
+<pre><code>- 源码分析
+</code></pre><p>—888<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//代码被包在一个匿名函数的内部，所以这里的this明确指向全局对象。</span></span><br><span class="line">	<span class="comment">//版本信息</span></span><br><span class="line"><span class="keyword">this</span>.MooTools = &#123;</span><br><span class="line">	version: <span class="string">'1.6.0'</span>,</span><br><span class="line">	build: <span class="string">'529422872adfff401b901b8b6c7ca5114ee95e2b'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 定义了typeOf, instanceOf两个函数来替代JS原生的typeof和instanceof方法(注意大小写)</span><br><span class="line"></span><br><span class="line">//定义typeOf方法(注意O大写！),在原生typeof的基础上做了拓展,判断参数类型</span><br><span class="line">var typeOf = this.typeOf = function(item)&#123;</span><br><span class="line">	//如果对象是null则返回null</span><br><span class="line">	if (item == null) return &apos;null&apos;;</span><br><span class="line">	if (item.$family != null) return item.$family();</span><br><span class="line"></span><br><span class="line">	//判断node类型</span><br><span class="line">	if (item.nodeName)&#123;</span><br><span class="line">		//如果nodeType的值为1，则返回element</span><br><span class="line">		if (item.nodeType == 1) return &apos;element&apos;;</span><br><span class="line">		//如果nodeType的值为3，判断其有无值，选择返回值或者空白格</span><br><span class="line">		if (item.nodeType == 3) return (/\S/).test(item.nodeValue) ? &apos;textnode&apos; : &apos;whitespace&apos;;</span><br><span class="line">	&#125; else if (typeof item.length == &apos;number&apos;)&#123;</span><br><span class="line">		if (&apos;callee&apos; in item) return &apos;arguments&apos;;				//如果有callee属性的则返回arguments</span><br><span class="line">		if (&apos;item&apos; in item) return &apos;collection&apos;;				//如果有item属性的则返回collection</span><br><span class="line">	&#125;</span><br><span class="line">	//如果都不满足则返回原生JS typeof运算符的结果：&quot;undefined&quot;,&quot;boolean&quot;,&quot;string&quot;,&quot;number&quot;,&quot;object&quot;,&quot;function&quot;</span><br><span class="line">	return typeof item;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//定义instanceOf方法(注意O大写！)，在原生instanceof的基础上做了拓展,判断某个对象是否是某个特定类型的实例</span><br><span class="line">var instanceOf = this.instanceOf = function(item, object)&#123;</span><br><span class="line">	//如果对象为null则返回false</span><br><span class="line">	if (item == null) return false;</span><br><span class="line">	//定义constructor属性 判断是否可以追溯到object，如果可以则返回true</span><br><span class="line">	var constructor = item.$constructor || item.constructor;</span><br><span class="line">	while (constructor)&#123;</span><br><span class="line">		if (constructor === object) return true;</span><br><span class="line">		constructor = constructor.parent;</span><br><span class="line">	&#125;</span><br><span class="line">	/*&lt;ltIE8&gt;*/	//------------&gt;前后两个/*&lt;ltIE8&gt;*/表示为了兼容IE8.。。。。。。万恶的IE！！！</span><br><span class="line">	if (!item.hasOwnProperty) return false;</span><br><span class="line">	/*&lt;/ltIE8&gt;*/</span><br><span class="line">	//如果都不满足则返回原生JS typeof运算符的结果</span><br><span class="line">	return item instanceof object;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var hasOwnProperty = Object.prototype.hasOwnProperty;</span><br><span class="line"></span><br><span class="line">/*&lt;ltIE8&gt;*/</span><br><span class="line"></span><br><span class="line">var enumerables = true;</span><br><span class="line">//对IE中不能遍历对象中toString属性的bug做一个修正</span><br><span class="line">for (var i in &#123;toString: 1&#125;) enumerables = null;</span><br><span class="line">//如果遍历不到则enumerables为true，然后将这些属性暂存到一个数组保存到enumerables中</span><br><span class="line">if (enumerables) enumerables = [&apos;hasOwnProperty&apos;, &apos;valueOf&apos;, &apos;isPrototypeOf&apos;, &apos;propertyIsEnumerable&apos;, &apos;toLocaleString&apos;, &apos;toString&apos;, &apos;constructor&apos;];</span><br><span class="line"></span><br><span class="line">//该函数就是传进object和bind两个对象和fn方法，首先遍历判断object对象里是否有enumberables数组中的那些属性，</span><br><span class="line">//如果有则让bind对象执行fn方法，该方法传入k和object[k]两个参数</span><br><span class="line">function forEachObjectEnumberableKey(object, fn, bind)&#123;</span><br><span class="line">	if (enumerables) for (var i = enumerables.length; i--;)&#123;</span><br><span class="line">		var k = enumerables[i];</span><br><span class="line">		//hasOwnProperty.call(object, k) --&gt; object.hasOwnProperty(k) --&gt;object对象是否有自己的属性k</span><br><span class="line">		//fn.call(bind, k, object[k]) --&gt; bind.fn(k,object[k]) --&gt;bind对象执行fn方法并传入参数k和object[k]</span><br><span class="line">		if (hasOwnProperty.call(object, k)) fn.call(bind, k, object[k]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">/*&lt;/ltIE8&gt;*/</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/13/JavaScript-Puzzlers-44道让人精分的题/" rel="next" title="postJavaScript Puzzlers 44道令人精分题">
+                <i class="fa fa-chevron-left"></i> postJavaScript Puzzlers 44道令人精分题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">smileBug的个人博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
